@@ -33,7 +33,6 @@ dependencies = [
     # "testql>=1.2.64; python_version < '3.14'",  # optional: endpoint testing DSL,
     "goal>=2.1.0",
     "costs>=0.1.20",
-    "pfix>=0.1.60",
 ]
 
 license = "Apache-2.0"
@@ -48,7 +47,6 @@ dev = ["pytest>=8", "pytest-cov", "pytest-asyncio", "ruff", "mypy",
     "mutmut>=2.5",
     "goal>=2.1.0",
     "costs>=0.1.20",
-    "pfix>=0.1.60",
 ]
 
 [project.scripts]
@@ -96,22 +94,6 @@ runner = "python -m pytest -x --tb=no -q"
 tests_dir = "tests/"
 # Skip noisy mutants in pure-data classes / event payloads.
 also_copy = ["tests/", "pyproject.toml"]
-
-[tool.pfix]
-# Self-healing Python configuration
-model = "openrouter/qwen/qwen3-coder-next"
-auto_apply = true
-auto_install_deps = true
-auto_restart = false
-max_retries = 3
-create_backups = false
-git_auto_commit = false
-
-[tool.pfix.runtime_todo]
-enabled = true
-todo_file = "TODO.md"
-min_severity = "low"
-deduplicate = true
 
 [tool.costs]
 # AI Cost tracking configuration
