@@ -82,6 +82,11 @@ Detailed per-version notes appear in entries below.
 
 ## [Unreleased]
 
+## [0.1.40] - 2026-09-14
+
+### Fixed
+- [ticket-002] build: remove pfix auto-repair configuration
+
 ## [0.1.39] - 2026-09-08
 
 ### Docs
@@ -884,3 +889,4 @@ na dużym repo (c2004 ≈ 88 podkatalogów). Fix po stronie upstream (silnik), b
 [0.1.37]: https://github.com/semcod/resplit/compare/v0.1.37...v0.1.37
 [0.1.38]: https://github.com/semcod/resplit/compare/v0.1.38...v0.1.38
 [0.1.39]: https://github.com/semcod/resplit/compare/v0.1.39...v0.1.39
+[0.1.40]: https://github.com/semcod/resplit/compare/v0.1.40...v0.1.40
