@@ -29,6 +29,22 @@ rebuild analyze truth /path/to/repo
 
 Correlates git history with test results to identify the "best" version of each function — highest test pass rate and lowest complexity.
 
+> **Note:** Truth analysis is **Python-only** (AST). For c2004 SPA routes such as `/connect-test-customers`, use `rebuild restore` (see below) or `git log -- connect-test/`.
+
+## c2004 SPA routes (`restore`)
+
+`rebuild restore` now resolves c2004 flat page routes via `rebuild.analysis.c2004_route_resolver`:
+
+- `/connect-test-customers` → `connect-test/.../customers.page.ts` (through `connect-test-customers.page.ts` wrapper)
+- `/connect-template2` → `connect-template2/.../connect-template2.view.ts`
+- Copies matching `connect-*/frontend` packages, not only `frontend/`
+
+```bash
+rebuild restore /connect-test-customers /path/to/c2004 --output ./restored
+```
+
+Previously, restore searched for the literal path string (`/connect-test-customers`) and found **0 files**, because c2004 generates routes from page names in `page.registry.ts`.
+
 ## Vector Search
 
 ```bash

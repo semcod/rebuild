@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import List, Optional, Tuple
 
 from rich.console import Console
+from ...analysis.c2004_route_resolver import resolve_c2004_route
 from .base import Service
 
 
@@ -69,6 +70,28 @@ class RestoreService(Service[Tuple[str, Path], Optional[date]]):
             if df.exists():
                 shutil.copy2(df, docker_dir / f"Dockerfile.{sub}")
 
+        route_files = self._find_route_files(endpoint_path)
+        route_resolution = (
+            resolve_c2004_route(self.repo_path, endpoint_path) if route_files else None
+        )
+        if route_files:
+            for src in route_files:
+                rel = src.relative_to(self.repo_path)
+                bucket = "frontend" if rel.parts and rel.parts[0] == "frontend" else "packages"
+                dst_root = target / bucket
+                dst = dst_root / rel
+                dst.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(src, dst)
+            self.console.print(f"  Skopiowano {len(route_files)} plików trasy SPA")
+
+            for pkg_root in (route_resolution.package_roots if route_resolution else []):
+                rel = pkg_root.relative_to(self.repo_path)
+                dst = target / "packages" / rel
+                if dst.exists():
+                    continue
+                shutil.copytree(pkg_root, dst, dirs_exist_ok=True, symlinks=True, ignore_dangling_symlinks=True)
+                self.console.print(f"  Skopiowano pakiet {rel}")
+
         backend_files = self._find_backend_files(endpoint_path)
         if backend_files:
             backend_dir = target / "backend"
@@ -80,13 +103,22 @@ class RestoreService(Service[Tuple[str, Path], Optional[date]]):
                 shutil.copy2(src, dst)
             self.console.print(f"  Skopiowano {len(backend_files)} plików backend")
 
-        if self._is_page_endpoint(endpoint_path) and (self.repo_path / "frontend").exists():
+        if self._is_page_endpoint(endpoint_path) and (self.repo_path / "frontend").exists() and not route_files:
             frontend_dir = target / "frontend"
-            shutil.copytree(self.repo_path / "frontend", frontend_dir, dirs_exist_ok=True)
-            self.console.print("  Skopiowano frontend/")
+            shutil.copytree(self.repo_path / "frontend", frontend_dir, dirs_exist_ok=True, symlinks=True, ignore_dangling_symlinks=True)
+            self.console.print("  Skopiowano frontend/ (fallback — brak mapowania trasy)")
 
-        self._write_readme(target, endpoint_path, working_day, backend_files)
+        self._write_readme(target, endpoint_path, working_day, backend_files, route_files)
         self.console.print("  Zapisano README.md")
+
+    def _find_route_files(self, endpoint_path: str) -> List[Path]:
+        if not self._is_page_endpoint(endpoint_path):
+            return []
+        try:
+            resolution = resolve_c2004_route(self.repo_path, endpoint_path)
+        except Exception:
+            return []
+        return resolution.all_files
 
     def _find_backend_files(self, endpoint_path: str) -> List[Path]:
         literal = endpoint_path
@@ -111,10 +143,18 @@ class RestoreService(Service[Tuple[str, Path], Optional[date]]):
         return "/api/" not in path and "/webhook/" not in path
 
     def _write_readme(
-        self, target: Path, endpoint_path: str, working_day: date, backend_files: List[Path]
+        self,
+        target: Path,
+        endpoint_path: str,
+        working_day: date,
+        backend_files: List[Path],
+        route_files: Optional[List[Path]] = None,
     ) -> None:
         slug = endpoint_path.strip("/").replace("/", "-") or "root"
-        files_list = "\n".join(f"- `{f.name}`" for f in backend_files[:10])
+        files_list = "\n".join(f"- `{f.relative_to(self.repo_path)}`" for f in backend_files[:10])
+        route_list = "\n".join(
+            f"- `{f.relative_to(self.repo_path)}`" for f in (route_files or [])[:15]
+        )
 
         readme = f"""# Przywrócony endpoint: `{endpoint_path}`
 
@@ -126,13 +166,18 @@ Wygenerowany przez [rebuild](https://github.com/semcod/rebuild).
 
 ```
 {slug}/
-  backend/    # handlery i router endpointu
-  frontend/   # (jeśli dotyczy)
+  backend/    # handlery API (jeśli dotyczy)
+  frontend/   # host frontend (jeśli skopiowany)
+  packages/   # pakiety connect-* (monorepo c2004)
   docker/     # docker-compose + Dockerfile
   README.md
 ```
 
-## Znalezione pliki backend
+## Znalezione pliki trasy SPA (c2004)
+
+{route_list or "_(brak — użyto fallback frontend/)_"}
+
+## Znalezione pliki backend / registry
 
 {files_list or "_(brak)_"}
 

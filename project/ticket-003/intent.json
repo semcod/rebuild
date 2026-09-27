@@ -1,0 +1,19 @@
+{
+  "ticket": "ticket-003",
+  "summary": "Resolve c2004 SPA routes and copy packages in restore service",
+  "allowedPaths": [
+    "rebuild/analysis/c2004_route_resolver.py",
+    "rebuild/application/services/restore_service.py",
+    "docs/guide/analyze.md",
+    "tests/test_c2004_restore_routes.py",
+    "tests/test_c2004_route_resolver.py",
+    ".gitignore",
+    "AGENTS.md",
+    "project/ticket-003/**"
+  ],
+  "forbiddenPaths": [
+    ".env"
+  ],
+  "authorization": "SESSION_EXECUTION_AUTHORIZATION",
+  "outcome": "RestoreService resolves c2004 flat page routes to module implementations and copies connect-* packages safely handling symlinks."
+}
