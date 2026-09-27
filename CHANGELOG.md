@@ -82,6 +82,12 @@ Detailed per-version notes appear in entries below.
 
 ## [Unreleased]
 
+## [0.1.41] - 2026-09-27
+
+### Added
+- feat(restore): resolve c2004 SPA routes and copy packages (ticket-003) (#6)
+- ci: add Planfile GitHub sync workflow (v0.1.126) (#5)
+
 ## [0.1.40] - 2026-09-14
 
 ### Fixed
@@ -890,3 +896,4 @@ na dużym repo (c2004 ≈ 88 podkatalogów). Fix po stronie upstream (silnik), b
 [0.1.38]: https://github.com/semcod/resplit/compare/v0.1.38...v0.1.38
 [0.1.39]: https://github.com/semcod/resplit/compare/v0.1.39...v0.1.39
 [0.1.40]: https://github.com/semcod/resplit/compare/v0.1.40...v0.1.40
+[0.1.41]: https://github.com/semcod/resplit/compare/v0.1.41...v0.1.41
