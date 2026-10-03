@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rebuild"
-version = "0.1.41"
+version = "0.1.42"
 description = "Historical deployment analysis — walk git history, deploy per day, test all endpoints, capture screenshots, restore working fragments"
 readme = "README.md"
 authors = [{ name = "Tom Sapletta", email = "tom@sapletta.com" }]
