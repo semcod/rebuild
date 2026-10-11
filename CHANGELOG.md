@@ -82,6 +82,11 @@ Detailed per-version notes appear in entries below.
 
 ## [Unreleased]
 
+## [0.1.44] - 2026-10-11
+
+### Added
+- fix(ticket-004): sync VERSION to 0.1.43, update bump script and add test_version_parity
+
 ## [0.1.43] - 2026-10-03
 
 ### Other
@@ -909,3 +914,4 @@ na dużym repo (c2004 ≈ 88 podkatalogów). Fix po stronie upstream (silnik), b
 [0.1.41]: https://github.com/semcod/resplit/compare/v0.1.41...v0.1.41
 [0.1.42]: https://github.com/semcod/resplit/compare/v0.1.42...v0.1.42
 [0.1.43]: https://github.com/semcod/resplit/compare/v0.1.43...v0.1.43
+[0.1.44]: https://github.com/semcod/resplit/compare/v0.1.44...v0.1.44
