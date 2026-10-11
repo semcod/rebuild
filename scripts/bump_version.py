@@ -28,6 +28,7 @@ ROOT = Path(__file__).parent.parent
 INIT_FILE = ROOT / "rebuild" / "__init__.py"
 PYPROJECT = ROOT / "pyproject.toml"
 CHANGELOG = ROOT / "CHANGELOG.md"
+VERSION_FILE = ROOT / "VERSION"
 
 
 def read_version() -> str:
@@ -77,6 +78,12 @@ def update_pyproject(new_version: str, dry_run: bool) -> None:
     if not dry_run:
         PYPROJECT.write_text(updated)
     print(f"  {'[dry-run] ' if dry_run else ''}pyproject.toml       → version = {new_version!r}")
+
+
+def update_version_file(new_version: str, dry_run: bool) -> None:
+    if not dry_run:
+        VERSION_FILE.write_text(f"{new_version}\n", encoding="utf-8")
+    print(f"  {'[dry-run] ' if dry_run else ''}VERSION              → {new_version!r}")
 
 
 def collect_unreleased_entries() -> list[str]:
@@ -222,15 +229,16 @@ def main() -> None:
 
     update_init(new_version, args.dry_run)
     update_pyproject(new_version, args.dry_run)
+    update_version_file(new_version, args.dry_run)
     update_changelog(new_version, args.dry_run)
 
     if not args.dry_run:
         print(f"\n✓ Version bumped to {new_version}")
         print("  Next steps:")
-        print(f"    git add rebuild/__init__.py pyproject.toml CHANGELOG.md")
+        print("    git add rebuild/__init__.py pyproject.toml CHANGELOG.md VERSION")
         print(f"    git commit -m 'chore: bump version to {new_version}'")
         print(f"    git tag v{new_version}")
-        print(f"    git push && git push --tags")
+        print("    git push && git push --tags")
     else:
         print(f"\n[dry-run] No files modified. Would bump to {new_version}")
 

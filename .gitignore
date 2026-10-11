@@ -249,8 +249,7 @@ __marimo__/
 # swop
 .swop/
 swop-drift.log
-site/
-.github/
+.github/copilot-instructions.md
 .rebuild_realtime_test2/
 
 # Local ticket worktrees and private recovery state

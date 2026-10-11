@@ -42,7 +42,7 @@ jobs:
       - name: Commit and tag
         run: |
           VERSION=$(python scripts/bump_version.py --show | sed 's/rebuild v//')
-          git add rebuild/__init__.py pyproject.toml CHANGELOG.md
+          git add rebuild/__init__.py pyproject.toml CHANGELOG.md VERSION
           git commit -m "chore: bump version to $VERSION [skip ci]"
           git tag "v$VERSION"
           git push
