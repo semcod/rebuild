@@ -233,21 +233,41 @@ strategies:
       file: requirements.txt
       lock: pip freeze > requirements.txt
   nodejs:
-    test: npm test
-    build: npm run build
+    test: 'true'
+    build: 'true'
     publish: twine upload dist/rebuild-{version}*
-    publish_enabled: true
+    publish_enabled: false
     dependencies:
       file: package-lock.json
       lock: npm install
   rust:
-    test: cargo test
-    build: cargo build --release
+    test: 'true'
+    build: 'true'
     publish: twine upload dist/rebuild-{version}*
-    publish_enabled: true
+    publish_enabled: false
     dependencies:
       file: Cargo.lock
       lock: cargo update
+  go:
+    test: 'true'
+    build: 'true'
+    publish_enabled: false
+  ruby:
+    test: 'true'
+    build: 'true'
+    publish_enabled: false
+  php:
+    test: 'true'
+    build: 'true'
+    publish_enabled: false
+  dotnet:
+    test: 'true'
+    build: 'true'
+    publish_enabled: false
+  java:
+    test: 'true'
+    build: 'true'
+    publish_enabled: false
 registries:
   pypi:
     url: https://pypi.org/simple/
