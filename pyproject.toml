@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rebuild"
-version = "0.1.45"
+version = "0.1.46"
 description = "Historical deployment analysis — walk git history, deploy per day, test all endpoints, capture screenshots, restore working fragments"
 readme = "README.md"
 authors = [{ name = "Tom Sapletta", email = "tom@sapletta.com" }]
@@ -45,7 +45,7 @@ api = ["fastapi>=0.115", "uvicorn[standard]>=0.30", "prometheus-client>=0.20"]
 full = ["playwright>=1.44", "textual>=0.60", "sentence-transformers>=2.7", "wup>=0.2.21", "regres", "testql>=1.2.64; python_version < '3.14'", "fastapi>=0.115", "uvicorn[standard]>=0.30"]
 dev = ["pytest>=8", "pytest-cov", "pytest-asyncio", "ruff", "mypy",
     "mutmut>=2.5",
-    "goal>=2.1.0",
+    "goal>=2.1.0; python_version >= '3.12'",
     "costs>=0.1.20",
 ]
 

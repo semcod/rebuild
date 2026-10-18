@@ -7,5 +7,5 @@ restore working fragments.
 
 from __future__ import annotations
 
-__version__ = "0.1.45"
+__version__ = "0.1.46"
 __all__ = ["__version__"]
