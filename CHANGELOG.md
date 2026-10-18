@@ -82,6 +82,11 @@ Detailed per-version notes appear in entries below.
 
 ## [Unreleased]
 
+## [0.1.47] - 2026-10-18
+
+### Changed
+- Version bump to 0.1.47
+
 ## [0.1.45] - 2026-10-15
 
 ### Added
@@ -921,3 +926,4 @@ na dużym repo (c2004 ≈ 88 podkatalogów). Fix po stronie upstream (silnik), b
 [0.1.43]: https://github.com/semcod/resplit/compare/v0.1.43...v0.1.43
 [0.1.44]: https://github.com/semcod/resplit/compare/v0.1.44...v0.1.44
 [0.1.45]: https://github.com/semcod/resplit/compare/v0.1.45...v0.1.45
+[0.1.47]: https://github.com/semcod/resplit/compare/v0.1.47...v0.1.47
